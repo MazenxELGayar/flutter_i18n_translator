@@ -4,7 +4,7 @@ version: 0.1.0
 homepage: https://github.com/MazenxELGayar/flutter_i18n_translator
 repository: https://github.com/MazenxELGayar/flutter_i18n_translator
 issue_tracker: https://github.com/MazenxELGayar/flutter_i18n_translator
-
+license: MIT
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
