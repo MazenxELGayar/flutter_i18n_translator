@@ -22,7 +22,7 @@ part "models/i18n_locale_file.dart";
 int charBatchLimit = 3000;
 bool autoTranslate = false;
 bool autoApplyTranslations = false;
-bool showDebug = true;
+bool showDebug = false;
 
 void runTranslator(List<String> args) async {
 // Parse command-line arguments
