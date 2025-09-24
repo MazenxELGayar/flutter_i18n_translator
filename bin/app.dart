@@ -50,7 +50,7 @@ void runTranslator(List<String> args) async {
       case '--help':
       case '-h':
         print(
-          "i18n_translator CLI usage:\n"
+          "flutter_i18n_translator CLI usage:\n"
           "--batch-limit <number>         Set max characters per batch (default: $charBatchLimit)\n"
           "--auto-translate               Automatically send translations without confirmation\n"
           "--auto_apply-translations      Apply translations without user prompt\n"
