@@ -66,13 +66,25 @@ enum I18nKeyCase {
 
   // ---- private converters ----
   static String _toCamelCase(String input) {
+    // Split on _, -, spaces
     final parts = input.split(RegExp(r'[_\s-]+'));
-    return parts.first.toLowerCase() +
+
+    // If only one part, preserve internal capitals
+    if (parts.length == 1) {
+      final p = parts.first;
+      return p[0].toLowerCase() + p.substring(1);
+    }
+
+    final newValue = parts.first.toLowerCase() +
         parts
             .skip(1)
             .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
             .join();
+
+    i18PrintDebug("$input => $newValue");
+    return newValue;
   }
+
 
   static String _toPascalCase(String input) {
     final parts = input.split(RegExp(r'[_\s-]+'));

@@ -179,6 +179,9 @@ void processArgs(List<String> args) {
         if (i + 1 < args.length) {
           keyCase = I18nKeyCase.fromString(args[i + 1]);
           i++;
+          i18PrintDebug(
+            "Key Case: $keyCase",
+          );
         } else {
           i18PrintError(
               "Error: --key-case requires a value (camel, pascal, snake, kebab)");
