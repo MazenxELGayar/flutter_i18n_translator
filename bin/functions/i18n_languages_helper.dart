@@ -63,4 +63,61 @@ abstract class I18nLanguageHelper {
 
     return missing;
   }
+
+  static Future<void> postProcessI18nJson(String generatedDir) async {
+    final file = File('$generatedDir/i18n.dart');
+
+    if (!await file.exists()) {
+      print("⚠️ i18n.dart not found in $generatedDir");
+      return;
+    }
+
+    var content = await file.readAsString();
+
+    // Extract only the root I18n class (first match)
+    final i18nClassRegex = RegExp(
+      r'class I18n implements WidgetsLocalizations[^{]*\{([\s\S]*?)\n\}',
+      multiLine: true,
+    );
+
+    final match = i18nClassRegex.firstMatch(content);
+    if (match == null) {
+      print("⚠️ Could not find I18n class in i18n.dart");
+      return;
+    }
+
+    var i18nBody = match.group(1)!;
+
+    // Required overrides
+    final requiredOverrides = <String, String>{
+      'copyButtonLabel': 'String get copyButtonLabel => "Copy";',
+      'cutButtonLabel': 'String get cutButtonLabel => "Cut";',
+      'lookUpButtonLabel': 'String get lookUpButtonLabel => "Look up";',
+      'pasteButtonLabel': 'String get pasteButtonLabel => "Paste";',
+      'searchWebButtonLabel':
+          'String get searchWebButtonLabel => "Search Web";',
+      'selectAllButtonLabel':
+          'String get selectAllButtonLabel => "Select All";',
+      'shareButtonLabel': 'String get shareButtonLabel => "Share";',
+    };
+
+    // Inject only missing ones into the I18n class body
+    requiredOverrides.forEach((name, code) {
+      if (!i18nBody.contains(name)) {
+        i18nBody += '\n  @override\n  $code\n';
+      }
+    });
+
+    // Rebuild full file content
+    final patched = content.replaceFirst(
+      i18nClassRegex,
+      'class I18n implements WidgetsLocalizations {\n$i18nBody\n}',
+    );
+
+    await file.writeAsString(patched);
+    i18PrintNormal(
+      "✅ Patched I18n class with missing WidgetsLocalizations overrides",
+      writeLine: true,
+    );
+  }
 }

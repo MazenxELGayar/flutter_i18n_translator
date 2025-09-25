@@ -5,11 +5,13 @@ class I18nConfig {
   final I18nLocaleFile defaultLocale;
   final Set<I18nLocaleFile> locales;
   final Directory localeDirectory;
+  final Directory generatedDirectory;
 
   I18nConfig({
     required this.defaultLocale,
     required this.locales,
     required this.localeDirectory,
+    required this.generatedDirectory,
   });
 
   /// Parse raw JSON into I18nConfig
@@ -20,6 +22,13 @@ class I18nConfig {
     if (!localeDir.existsSync()) {
       i18PrintDebug('📂 Creating missing locale directory: $localePathStr');
       localeDir.createSync(recursive: true);
+    }
+
+    final generatedPathStr = json['generatedDirectory'] as String? ?? "lib/generated";
+    final generatedDir = Directory(generatedPathStr);
+    if (!generatedDir.existsSync()) {
+      i18PrintDebug('📂 Creating missing Generated directory: $generatedPathStr');
+      generatedDir.createSync(recursive: true);
     }
 
     /// ************************************************************************
@@ -83,6 +92,7 @@ class I18nConfig {
       defaultLocale: defaultLocale!,
       locales: locales,
       localeDirectory: localeDir,
+      generatedDirectory: generatedDir,
     );
   }
 

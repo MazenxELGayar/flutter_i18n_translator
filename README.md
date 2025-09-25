@@ -1,16 +1,19 @@
-Perfect 👍 Here’s the updated **README.md** with a clear note about requiring `i18n_json` when using `--autoGenerate`:
+Perfect 👍 Here’s the updated **README.md** with a clear note about requiring `i18n_json` when using
+`--autoGenerate`:
 
 ````markdown
 # flutter_i18n_translator
 
 [![pub package](https://img.shields.io/pub/v/flutter_i18n_translator.svg)](https://pub.dev/packages/flutter_i18n_translator)
 
-A CLI tool to automatically translate missing keys in JSON localization files for Flutter/Dart projects.  
+A CLI tool to automatically translate missing keys in JSON localization files for Flutter/Dart
+projects.  
 It uses [translator](https://pub.dev/packages/translator) under the hood (Google Translate API).
 
 ---
 
 ## ✨ Features
+
 - Detects missing keys in your i18n JSON files.
 - Translates missing entries using Google Translate.
 - Supports batching with character limits.
@@ -53,16 +56,46 @@ Create an `i18nconfig.json` in your project root:
   "defaultLocale": "en-US",
   "locales": [
     "en-US",
+    "ar-EG",
     "fr-FR",
-    "ar-EG"
+    "es-ES",
+    "de-DE",
+    "it-IT",
+    "ru-RU",
+    "ja-JP",
+    "ko-KR",
+    "pt-PT",
+    "hi-IN",
+    "tr-TR"
   ],
-  "localePath": "i18n"
+  "localePath": "i18n",
+  "generatedPath": "lib/generated",
+  "ltr": [
+    "en-US",
+    "fr-FR",
+    "es-ES",
+    "de-DE",
+    "it-IT",
+    "ru-RU",
+    "ja-JP",
+    "ko-KR",
+    "pt-PT",
+    "hi-IN",
+    "tr-TR"
+  ],
+  "rtl": [
+    "ar-EG"
+  ]
 }
+
 ```
 
 * `defaultLocale`: The base locale with full translations.
 * `locales`: List of all locales you support.
 * `localePath`: Directory where JSON files are stored.
+* `generatedPath`: Directory where i18n will generate Dart files.
+* `ltr`: Locales that are Left to Right.
+* `rtl`: Locales that are Right to Left.
 
 Example structure:
 
@@ -72,6 +105,9 @@ project_root/
     en-US.json
     fr-FR.json
     ar-EG.json
+  lib/
+    generated/
+      i18n.dart
   i18nconfig.json
 ```
 
@@ -95,14 +131,17 @@ flutter_i18n_translator
 --no-autoGenerate              Disable automatic file generation
 --show-debug                   Enable debug messages
 --no-debug                     Disable debug messages
+--addMissingOverrides          Ensure WidgetsLocalizations overrides are added to I18n
+--no-addMissingOverrides       Disable adding WidgetsLocalizations overrides to I18n
 --help, -h                     Show this help message
 ```
 
-⚠️ **Note:** To use `--autoGenerate`, you must add [`i18n_json`](https://pub.dev/packages/i18n_json) to your project:
+⚠️ **Note:** To use `--autoGenerate`, you must add [`i18n_json`](https://pub.dev/packages/i18n_json)
+to your project:
 
 ```yaml
 dev_dependencies:
-  i18n_json: ^1.0.0
+  i18n_json: ^0.1.1+2
 ```
 
 ---

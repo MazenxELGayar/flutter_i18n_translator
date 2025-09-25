@@ -6,11 +6,17 @@ import 'package:translator/translator.dart';
 import 'functions/i18n_pretty_map.dart';
 
 part "functions/i18n_languages_helper.dart";
+
 part "functions/i18n_print.dart";
+
 part "functions/i18n_translation_helper.dart";
+
 part "models/i18n_config.dart";
+
 part 'models/i18n_locale.dart';
+
 part "models/i18n_locale_file.dart";
+
 part 'models/text_direction.dart';
 
 // Default CLI options
@@ -19,53 +25,12 @@ bool autoTranslate = false;
 bool autoApplyTranslations = false;
 bool showDebug = false;
 bool autoGenerate = true;
+bool addMissingOverridesGeneratedFile = true;
 
 void runTranslator(List<String> args) async {
-// Parse command-line arguments
-  for (var i = 0; i < args.length; i++) {
-    final arg = args[i];
-    switch (arg) {
-      case '--batch-limit':
-        if (i + 1 < args.length) {
-          charBatchLimit = int.tryParse(args[i + 1]) ?? charBatchLimit;
-          i++;
-        }
-        break;
-      case '--auto-translate':
-        autoTranslate = true;
-        break;
-      case '--auto_apply-translations':
-        autoApplyTranslations = true;
-        break;
-      case '--show-debug':
-        showDebug = true;
-        break;
-      case '--no-debug':
-        showDebug = false;
-        break;
-      case '--autoGenerate':
-        autoGenerate = true;
-        break;
-      case '--no-autoGenerate':
-        autoGenerate = false;
-        break;
-      case '--help':
-      case '-h':
-        print(
-          "flutter_i18n_translator CLI usage:\n"
-          "--batch-limit <number>         Set max characters per batch (default: $charBatchLimit)\n"
-          "--auto-translate               Automatically send translations without confirmation\n"
-          "--auto_apply-translations      Apply translations without user prompt\n"
-          "--autoGenerate                 Automatically generate missing keys\n"
-          "--no-autoGenerate              Disable automatic key generation\n"
-          "--show-debug                   Enable debug messages\n"
-          "--no-debug                     Disable debug messages\n"
-          "--help, -h                     Show this help message",
-        );
-        exit(0); // Exit immediately after showing help
-    }
-  }
-
+  processArgs(
+    args,
+  );
   i18PrintDebug("Loading I18n Configurations...");
   final I18nConfig? config = await I18nLanguageHelper.loadI18nConfig();
   if (config == null) {
@@ -154,10 +119,70 @@ void runTranslator(List<String> args) async {
         writeLine: true,
       );
       i18PrintDebug(result.stdout);
+      if (addMissingOverridesGeneratedFile) {
+        await I18nLanguageHelper.postProcessI18nJson(
+          config.generatedDirectory.path,
+        );
+      }
     } else {
       i18PrintError("❌ Failed to generate i18n files:");
       i18PrintError(result.stderr);
       exit(result.exitCode);
+    }
+  }
+}
+
+void processArgs(List<String> args) {
+  // Parse command-line arguments
+  for (var i = 0; i < args.length; i++) {
+    final arg = args[i];
+    switch (arg) {
+      case '--batch-limit':
+        if (i + 1 < args.length) {
+          charBatchLimit = int.tryParse(args[i + 1]) ?? charBatchLimit;
+          i++;
+        }
+        break;
+      case '--auto-translate':
+        autoTranslate = true;
+        break;
+      case '--auto_apply-translations':
+        autoApplyTranslations = true;
+        break;
+      case '--show-debug':
+        showDebug = true;
+        break;
+      case '--no-debug':
+        showDebug = false;
+        break;
+      case '--autoGenerate':
+        autoGenerate = true;
+        break;
+      case '--no-autoGenerate':
+        autoGenerate = false;
+        break;
+      case '--addMissingOverrides':
+        addMissingOverridesGeneratedFile = true;
+        break;
+      case '--no-addMissingOverrides':
+        addMissingOverridesGeneratedFile = false;
+        break;
+      case '--help':
+      case '-h':
+        print(
+          "flutter_i18n_translator CLI usage:\n"
+              "--batch-limit <number>         Set max characters per batch (default: $charBatchLimit)\n"
+              "--auto-translate               Automatically send translations without confirmation\n"
+              "--auto_apply-translations      Apply translations without user prompt\n"
+              "--autoGenerate                 Automatically generate missing keys\n"
+              "--no-autoGenerate              Disable automatic key generation\n"
+              "--addMissingOverrides          Ensure WidgetsLocalizations overrides are added to I18n\n"
+              "--no-addMissingOverrides       Disable adding overrides to I18n\n"
+              "--show-debug                   Enable debug messages\n"
+              "--no-debug                     Disable debug messages\n"
+              "--help, -h                     Show this help message",
+        );
+        exit(0);
     }
   }
 }
