@@ -132,6 +132,7 @@ abstract class I18nLanguageHelper {
         '✅ Dart fix applied successfully in $path',
         writeLine: true,
       );
+      i18PrintDebug(result.stdout);
     } else {
       i18PrintError('❌ Dart fix failed:\n${result.stderr}');
     }
