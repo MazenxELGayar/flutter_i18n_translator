@@ -36,7 +36,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.1
+  flutter_i18n_translator: ^0.1.1+2
 ```
 
 Run from project root:
@@ -141,7 +141,7 @@ to your project:
 
 ```yaml
 dev_dependencies:
-  i18n_json: ^0.1.1+2
+  i18n_json: ^1.0.0
 ```
 
 ---

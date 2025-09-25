@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.1.1 - 2025-09-25
+## 0.1.1+2 - 2025-09-25
 ### Added
 - `--autoGenerate` flag to automatically regenerate i18n files (runs `dart run i18n_json`).
 - `--no-autoGenerate` flag to explicitly disable automatic generation.
