@@ -33,7 +33,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.5
+  flutter_i18n_translator: ^0.1.6
 ```
 
 Run from project root:
