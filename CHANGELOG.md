@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.6 - 2025-09-25
+### Fixed
+- Corrected all key case conversion functions:
+  - `_toCamelCase`, `_toPascalCase`, `_toSnakeCase`, `_toKebabCase`.
+  - Now accurately converts any input without breaking internal capitalization or producing incorrect outputs.
+
 ## 0.1.5 - 2025-09-25
 ### Added
 - Steps in README for adding `flutter_i18n_translator` as an **External Tool** in Android Studio.
