@@ -77,8 +77,7 @@ class I18nConfig {
       return localeFile;
     }).toSet();
 
-    defaultLocale ??=
-        locales.first;
+    defaultLocale ??= locales.first;
 
     return I18nConfig(
       defaultLocale: defaultLocale!,

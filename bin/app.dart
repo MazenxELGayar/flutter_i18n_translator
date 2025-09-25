@@ -1,28 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:translator/translator.dart';
 
 import 'functions/i18n_pretty_map.dart';
 
-part 'models/i18n_locale.dart';
-
-part 'models/text_direction.dart';
-
 part "functions/i18n_languages_helper.dart";
-
-part "functions/i18n_translation_helper.dart";
-
 part "functions/i18n_print.dart";
-
+part "functions/i18n_translation_helper.dart";
 part "models/i18n_config.dart";
-
+part 'models/i18n_locale.dart';
 part "models/i18n_locale_file.dart";
+part 'models/text_direction.dart';
 
 // Default CLI options
 int charBatchLimit = 3000;
 bool autoTranslate = false;
 bool autoApplyTranslations = false;
 bool showDebug = false;
+bool autoGenerate = true;
 
 void runTranslator(List<String> args) async {
 // Parse command-line arguments
@@ -47,6 +43,12 @@ void runTranslator(List<String> args) async {
       case '--no-debug':
         showDebug = false;
         break;
+      case '--autoGenerate':
+        autoGenerate = true;
+        break;
+      case '--no-autoGenerate':
+        autoGenerate = false;
+        break;
       case '--help':
       case '-h':
         print(
@@ -54,6 +56,8 @@ void runTranslator(List<String> args) async {
           "--batch-limit <number>         Set max characters per batch (default: $charBatchLimit)\n"
           "--auto-translate               Automatically send translations without confirmation\n"
           "--auto_apply-translations      Apply translations without user prompt\n"
+          "--autoGenerate                 Automatically generate missing keys\n"
+          "--no-autoGenerate              Disable automatic key generation\n"
           "--show-debug                   Enable debug messages\n"
           "--no-debug                     Disable debug messages\n"
           "--help, -h                     Show this help message",
@@ -132,4 +136,28 @@ void runTranslator(List<String> args) async {
     "✅ All translations done!",
     writeLine: true,
   );
+
+  if (autoGenerate) {
+    i18PrintNormal(
+      "🔄 Running: dart run i18n_json",
+      writeLine: true,
+    );
+    final result = await Process.run(
+      'dart',
+      ['run', 'i18n_json'],
+      runInShell: true,
+    );
+
+    if (result.exitCode == 0) {
+      i18PrintNormal(
+        "✅ i18n_json generation completed.",
+        writeLine: true,
+      );
+      i18PrintDebug(result.stdout);
+    } else {
+      i18PrintError("❌ Failed to generate i18n files:");
+      i18PrintError(result.stderr);
+      exit(result.exitCode);
+    }
+  }
 }

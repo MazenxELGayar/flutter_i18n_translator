@@ -1,6 +1,6 @@
 name: flutter_i18n_translator
-description: A CLI tool to translate JSON localization files.
-version: 0.1.0
+description: A Flutter/Dart CLI tool that detects missing keys in JSON localization files, auto-translates them, and can regenerate Dart i18n helpers.
+version: 0.1.1+2
 homepage: https://github.com/MazenxELGayar/flutter_i18n_translator
 repository: https://github.com/MazenxELGayar/flutter_i18n_translator
 issue_tracker: https://github.com/MazenxELGayar/flutter_i18n_translator
@@ -15,6 +15,7 @@ dependencies:
 dev_dependencies:
   lints: ^3.0.0
   test: ^1.24.0
+  i18n_json: ^1.0.0
 
 executables:
   flutter_i18n_translator: flutter_i18n_translator

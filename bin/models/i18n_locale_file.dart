@@ -68,27 +68,31 @@ class I18nLocaleFile {
     localeFile.loadOrCreate();
     return localeFile;
   }
+
   /// Add or replace entries in jsonContent recursively
   void addOrReplaceEntries(Map<String, dynamic> newEntries) {
     void merge(Map<String, dynamic> target, Map<String, dynamic> source) {
       source.forEach((key, value) {
-        if (value is Map<String, dynamic> && target[key] is Map<String, dynamic>) {
+        if (value is Map<String, dynamic> &&
+            target[key] is Map<String, dynamic>) {
           merge(target[key], value);
         } else {
           target[key] = value;
         }
       });
     }
+
     merge(jsonContent, newEntries);
   }
+
   /// Equality based on locale
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is I18nLocaleFile &&
-              runtimeType == other.runtimeType &&
-              locale.languageCode == other.locale.languageCode &&
-              locale.countryCode == other.locale.countryCode;
+      other is I18nLocaleFile &&
+          runtimeType == other.runtimeType &&
+          locale.languageCode == other.locale.languageCode &&
+          locale.countryCode == other.locale.countryCode;
 
   @override
   int get hashCode =>

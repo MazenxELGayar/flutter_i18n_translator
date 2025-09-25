@@ -1,4 +1,6 @@
-markdown
+Perfect 👍 Here’s the updated **README.md** with a clear note about requiring `i18n_json` when using `--autoGenerate`:
+
+````markdown
 # flutter_i18n_translator
 
 [![pub package](https://img.shields.io/pub/v/flutter_i18n_translator.svg)](https://pub.dev/packages/flutter_i18n_translator)
@@ -15,6 +17,7 @@ It uses [translator](https://pub.dev/packages/translator) under the hood (Google
 - Placeholders (`{digit}`, `{name}`, etc.) are preserved during translation.
 - Configurable via `i18nconfig.json`.
 - CLI flags to enable automation & debug logging.
+- **Auto-generate Dart i18n files** using [`i18n_json`](https://pub.dev/packages/i18n_json).
 
 ---
 
@@ -30,7 +33,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.0
+  flutter_i18n_translator: ^0.1.1
 ```
 
 Run from project root:
@@ -88,10 +91,21 @@ flutter_i18n_translator
 --batch-limit <number>         Set max characters per translation batch (default: 3000)
 --auto-translate               Automatically send translations without confirmation
 --auto_apply-translations      Apply translations without user prompt
+--autoGenerate                 Automatically run `dart run i18n_json` to regenerate Dart files
+--no-autoGenerate              Disable automatic file generation
 --show-debug                   Enable debug messages
 --no-debug                     Disable debug messages
 --help, -h                     Show this help message
 ```
+
+⚠️ **Note:** To use `--autoGenerate`, you must add [`i18n_json`](https://pub.dev/packages/i18n_json) to your project:
+
+```yaml
+dev_dependencies:
+  i18n_json: ^1.0.0
+```
+
+---
 
 ### Examples
 
@@ -111,6 +125,12 @@ Translate & apply automatically:
 
 ```bash
 flutter_i18n_translator --auto-translate --auto_apply-translations
+```
+
+Translate and regenerate Dart i18n file automatically:
+
+```bash
+flutter_i18n_translator --autoGenerate
 ```
 
 Run silently without debug logs:
@@ -133,7 +153,7 @@ cd flutter_i18n_translator
 Run locally:
 
 ```bash
-dart run bin/flutter_flutter_i18n_translator.dart --help
+dart run bin/flutter_i18n_translator.dart --help
 ```
 
 ---
