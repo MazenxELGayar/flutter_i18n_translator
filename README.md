@@ -1,4 +1,3 @@
-````markdown
 # flutter_i18n_translator
 
 [![pub package](https://img.shields.io/pub/v/flutter_i18n_translator.svg)](https://pub.dev/packages/flutter_i18n_translator)

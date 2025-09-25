@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bbb915e-7eb5-4a44-a165-d839247d648a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/bin/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/bin/app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/models/i18n_config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/bin/models/i18n_config.dart" afterDir="false" />
-    </list>
+    <list default="true" id="4bbb915e-7eb5-4a44-a165-d839247d648a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
