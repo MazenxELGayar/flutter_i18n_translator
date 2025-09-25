@@ -1,6 +1,3 @@
-Perfect 👍 Here’s the updated **README.md** with a clear note about requiring `i18n_json` when using
-`--autoGenerate`:
-
 ````markdown
 # flutter_i18n_translator
 
