@@ -24,10 +24,12 @@ class I18nConfig {
       localeDir.createSync(recursive: true);
     }
 
-    final generatedPathStr = json['generatedDirectory'] as String? ?? "lib/generated";
+    final generatedPathStr =
+        json['generatedDirectory'] as String? ?? "lib/generated";
     final generatedDir = Directory(generatedPathStr);
     if (!generatedDir.existsSync()) {
-      i18PrintDebug('📂 Creating missing Generated directory: $generatedPathStr');
+      i18PrintDebug(
+          '📂 Creating missing Generated directory: $generatedPathStr');
       generatedDir.createSync(recursive: true);
     }
 

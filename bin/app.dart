@@ -171,16 +171,16 @@ void processArgs(List<String> args) {
       case '-h':
         print(
           "flutter_i18n_translator CLI usage:\n"
-              "--batch-limit <number>         Set max characters per batch (default: $charBatchLimit)\n"
-              "--auto-translate               Automatically send translations without confirmation\n"
-              "--auto_apply-translations      Apply translations without user prompt\n"
-              "--autoGenerate                 Automatically generate missing keys\n"
-              "--no-autoGenerate              Disable automatic key generation\n"
-              "--addMissingOverrides          Ensure WidgetsLocalizations overrides are added to I18n\n"
-              "--no-addMissingOverrides       Disable adding overrides to I18n\n"
-              "--show-debug                   Enable debug messages\n"
-              "--no-debug                     Disable debug messages\n"
-              "--help, -h                     Show this help message",
+          "--batch-limit <number>         Set max characters per batch (default: $charBatchLimit)\n"
+          "--auto-translate               Automatically send translations without confirmation\n"
+          "--auto_apply-translations      Apply translations without user prompt\n"
+          "--autoGenerate                 Automatically generate missing keys\n"
+          "--no-autoGenerate              Disable automatic key generation\n"
+          "--addMissingOverrides          Ensure WidgetsLocalizations overrides are added to I18n\n"
+          "--no-addMissingOverrides       Disable adding overrides to I18n\n"
+          "--show-debug                   Enable debug messages\n"
+          "--no-debug                     Disable debug messages\n"
+          "--help, -h                     Show this help message",
         );
         exit(0);
     }
