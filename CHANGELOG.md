@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.7 - 2025-09-25
+
+- Added `--autoDartFixGeneratedFile` and `--no-autoDartFixGeneratedFile` CLI flags
+  - Allows automatically running `dart fix --apply` on generated files after code generation
+  - Enabled by default, can be disabled with `--no-autoDartFixGeneratedFile`
+
 ## 0.1.6 - 2025-09-25
 ### Fixed
 - Corrected all key case conversion functions:

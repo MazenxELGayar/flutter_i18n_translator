@@ -27,6 +27,7 @@ bool autoTranslate = false;
 bool autoApplyTranslations = false;
 bool showDebug = false;
 bool autoGenerate = true;
+bool autoDartFixGeneratedFile = true;
 bool addMissingOverridesGeneratedFile = true;
 I18nKeyCase? keyCase;
 
@@ -132,6 +133,11 @@ void runTranslator(List<String> args) async {
           config.generatedDirectory.path,
         );
       }
+      if (autoDartFixGeneratedFile) {
+        await I18nLanguageHelper.fixGeneratedFiles(
+          config.generatedDirectory.path,
+        );
+      }
     } else {
       i18PrintError("❌ Failed to generate i18n files:");
       i18PrintError(result.stderr);
@@ -188,7 +194,12 @@ void processArgs(List<String> args) {
           exit(1);
         }
         break;
-
+      case '--autoDartFixGeneratedFile':
+        autoDartFixGeneratedFile = true;
+        break;
+      case '--no-autoDartFixGeneratedFile':
+        autoDartFixGeneratedFile = false;
+        break;
       case '--help':
       case '-h':
         print(
@@ -207,6 +218,8 @@ void processArgs(List<String> args) {
           "                                - pascal  (ExampleKey)\n"
           "                                - snake   (example_key)\n"
           "                                - kebab   (example-key)\n"
+          "--autoDartFixGeneratedFile     Automatically run 'dart fix --apply' on generated files\n"
+          "--no-autoDartFixGeneratedFile  Disable automatic 'dart fix' after generation\n"
           "--help, -h                     Show this help message",
         );
         exit(0);

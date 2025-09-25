@@ -33,7 +33,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.6
+  flutter_i18n_translator: ^0.1.7
 ```
 
 Run from project root:
@@ -130,6 +130,8 @@ flutter_i18n_translator
 --addMissingOverrides          Ensure WidgetsLocalizations overrides are added to I18n
 --no-addMissingOverrides       Disable adding WidgetsLocalizations overrides to I18n
 --key-case <style>             Convert all JSON keys to a specific case (camel, pascal, snake, kebab)
+--autoDartFixGeneratedFile     Automatically run 'dart fix --apply' on generated files
+--no-autoDartFixGeneratedFile  Disable automatic 'dart fix' after generation
 --help, -h                     Show this help message
 ```
 

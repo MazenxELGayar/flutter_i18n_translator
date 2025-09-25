@@ -120,4 +120,20 @@ abstract class I18nLanguageHelper {
       writeLine: true,
     );
   }
+
+  static Future<void> fixGeneratedFiles(String path) async {
+    final result = await Process.run(
+      'dart',
+      ['fix', '--apply', path],
+    );
+
+    if (result.exitCode == 0) {
+      i18PrintNormal(
+        '✅ Dart fix applied successfully in $path',
+        writeLine: true,
+      );
+    } else {
+      i18PrintError('❌ Dart fix failed:\n${result.stderr}');
+    }
+  }
 }
