@@ -33,7 +33,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.4
+  flutter_i18n_translator: ^0.1.5
 ```
 
 Run from project root:
@@ -180,6 +180,22 @@ Convert all keys to `snake_case`:
 ```bash
 flutter_i18n_translator --key-case snake
 ```
+---
+## ⚡ Android Studio Integration
+
+You can bind the CLI to a keyboard shortcut for faster usage:
+
+1. Go to **File → Settings → Tools → External Tools**.
+2. Click **+** to add a new tool:
+    - **Name:** `flutter_i18n_translator`
+    - **Program:** `dart`
+    - **Arguments:** `run flutter_i18n_translator`
+        - Or with flags: `run flutter_i18n_translator --auto-translate --auto_apply-translations`
+    - **Working directory:** `$ProjectFileDir$`
+3. Save and close.
+4. Now go to **File → Settings → Keymap**.
+5. Search for your tool name (`flutter_i18n_translator`), right-click → **Add Keyboard Shortcut**, and assign your preferred key combo.
+6. You can now run translations directly with your shortcut inside Android Studio 🎉
 
 ---
 

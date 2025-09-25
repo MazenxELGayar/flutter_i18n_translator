@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.5 - 2025-09-25
+### Added
+- Steps in README for adding `flutter_i18n_translator` as an **External Tool** in Android Studio.
+- Example shortcuts via **Keymap** for quick access.
+
+### Changed
+- `i18PrintNormal` now prints to `stdout` instead of `stderr` so normal messages are no longer displayed in red.
+- `i18PrintError` still prints to `stderr` in red.
+- `i18PrintDebug` prints to `stderr` in green (if debug is enabled).
+
 ## 0.1.4 - 2025-09-25
 ### Added
 - `--key-case` flag to automatically convert all JSON keys to a specific case.

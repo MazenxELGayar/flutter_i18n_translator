@@ -20,9 +20,9 @@ void i18PrintDebug(
   const reset = '\x1B[0m';
   final string = '$green[DEBUG] $message$reset';
   if (writeLine) {
-    stderr.writeln(string);
+    stdout.writeln(string);
   } else {
-    stderr.write(string);
+    stdout.write(string);
   }
 }
 
@@ -31,8 +31,8 @@ void i18PrintNormal(
   required bool writeLine,
 }) {
   if (writeLine) {
-    stderr.writeln(message);
+    stdout.writeln(message);
   } else {
-    stderr.write(message);
+    stdout.write(message);
   }
 }
