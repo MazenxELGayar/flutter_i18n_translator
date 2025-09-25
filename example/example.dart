@@ -72,6 +72,42 @@ Future<void> main() async {
     ['--no-autoGenerate'],
     description: 'Translate without generating Dart files',
   );
+
+  // 9️⃣ Ensure WidgetsLocalizations overrides are added
+  await _runExample(
+    ['--addMissingOverrides'],
+    description: 'Add missing WidgetsLocalizations overrides to I18n',
+  );
+
+  // 🔟 Disable adding WidgetsLocalizations overrides
+  await _runExample(
+    ['--no-addMissingOverrides'],
+    description: 'Do not add WidgetsLocalizations overrides to I18n',
+  );
+
+  // 1️⃣1️⃣ Convert keys to camelCase
+  await _runExample(
+    ['--key-case', 'camel'],
+    description: 'Convert all JSON keys to camelCase',
+  );
+
+  // 1️⃣2️⃣ Convert keys to PascalCase
+  await _runExample(
+    ['--key-case', 'pascal'],
+    description: 'Convert all JSON keys to PascalCase',
+  );
+
+  // 1️⃣3️⃣ Convert keys to snake_case
+  await _runExample(
+    ['--key-case', 'snake'],
+    description: 'Convert all JSON keys to snake_case',
+  );
+
+  // 1️⃣4️⃣ Convert keys to kebab-case
+  await _runExample(
+    ['--key-case', 'kebab'],
+    description: 'Convert all JSON keys to kebab-case',
+  );
 }
 
 Future<void> _runExample(List<String> args,

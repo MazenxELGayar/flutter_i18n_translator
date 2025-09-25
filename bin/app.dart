@@ -19,6 +19,8 @@ part "models/i18n_locale_file.dart";
 
 part 'models/text_direction.dart';
 
+part 'models/key_case.dart';
+
 // Default CLI options
 int charBatchLimit = 3000;
 bool autoTranslate = false;
@@ -26,6 +28,7 @@ bool autoApplyTranslations = false;
 bool showDebug = false;
 bool autoGenerate = true;
 bool addMissingOverridesGeneratedFile = true;
+I18nKeyCase? keyCase;
 
 void runTranslator(List<String> args) async {
   processArgs(
@@ -39,8 +42,10 @@ void runTranslator(List<String> args) async {
   } else {
     i18PrintDebug("I18n Configurations was parsed Successfully!");
   }
-
-// Exclude the default locale
+  if (keyCase != null) {
+    config.defaultLocale.convertAllKeys();
+  }
+  // Exclude the default locale
   final localesWithoutDefault =
       config.locales.where((locale) => locale != config.defaultLocale).toSet();
 
@@ -56,6 +61,9 @@ void runTranslator(List<String> args) async {
   }
 
   for (I18nLocaleFile localeFile in localesWithoutDefault) {
+    if (keyCase != null) {
+      localeFile.convertAllKeys();
+    }
     i18PrintDebug('**********************************************************\n'
         'Fetching Missing Keys for ${localeFile.localeString}...');
     final missing = I18nLanguageHelper.findMissingKeysWithPath(
@@ -167,6 +175,17 @@ void processArgs(List<String> args) {
       case '--no-addMissingOverrides':
         addMissingOverridesGeneratedFile = false;
         break;
+      case '--key-case':
+        if (i + 1 < args.length) {
+          keyCase = I18nKeyCase.fromString(args[i + 1]);
+          i++;
+        } else {
+          i18PrintError(
+              "Error: --key-case requires a value (camel, pascal, snake, kebab)");
+          exit(1);
+        }
+        break;
+
       case '--help':
       case '-h':
         print(
@@ -180,6 +199,11 @@ void processArgs(List<String> args) {
           "--no-addMissingOverrides       Disable adding overrides to I18n\n"
           "--show-debug                   Enable debug messages\n"
           "--no-debug                     Disable debug messages\n"
+          "--key-case <style>             Convert all keys to a specific case:\n"
+          "                                - camel   (exampleKey)\n"
+          "                                - pascal  (ExampleKey)\n"
+          "                                - snake   (example_key)\n"
+          "                                - kebab   (example-key)\n"
           "--help, -h                     Show this help message",
         );
         exit(0);

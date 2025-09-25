@@ -17,6 +17,7 @@ It uses [translator](https://pub.dev/packages/translator) under the hood (Google
 - Configurable via `i18nconfig.json`.
 - CLI flags to enable automation & debug logging.
 - **Auto-generate Dart i18n files** using [`i18n_json`](https://pub.dev/packages/i18n_json).
+- Convert all JSON keys to a specific case (`camelCase`, `PascalCase`, `snake_case`, `kebab-case`).
 
 ---
 
@@ -32,7 +33,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.3
+  flutter_i18n_translator: ^0.1.4
 ```
 
 Run from project root:
@@ -83,7 +84,6 @@ Create an `i18nconfig.json` in your project root:
     "ar-EG"
   ]
 }
-
 ```
 
 * `defaultLocale`: The base locale with full translations.
@@ -129,6 +129,7 @@ flutter_i18n_translator
 --no-debug                     Disable debug messages
 --addMissingOverrides          Ensure WidgetsLocalizations overrides are added to I18n
 --no-addMissingOverrides       Disable adding WidgetsLocalizations overrides to I18n
+--key-case <style>             Convert all JSON keys to a specific case (camel, pascal, snake, kebab)
 --help, -h                     Show this help message
 ```
 
@@ -172,6 +173,12 @@ Run silently without debug logs:
 
 ```bash
 flutter_i18n_translator --no-debug
+```
+
+Convert all keys to `snake_case`:
+
+```bash
+flutter_i18n_translator --key-case snake
 ```
 
 ---

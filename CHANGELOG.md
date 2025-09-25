@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.4 - 2025-09-25
+### Added
+- `--key-case` flag to automatically convert all JSON keys to a specific case.
+- Supported key case styles:
+  - `camel`, `camelcase`, `camel_case` → camelCase
+  - `pascal`, `pascalcase`, `pascal_case` → PascalCase
+  - `snake`, `snakecase`, `snake_case` → snake_case
+  - `kebab`, `kebabcase`, `kebab_case`, `dash`, `dashcase`, `dash_case` → kebab-case
+- New examples in `example.dart` for each `--key-case` style.
+- Updated README with `--key-case` documentation.
+
+### Changed
+- Updated CLI help to show all supported `--key-case` options.
+
 ## 0.1.3 - 2025-09-25
 ### Added
 - `--autoGenerate` flag to automatically regenerate i18n files (runs `dart run i18n_json`).
