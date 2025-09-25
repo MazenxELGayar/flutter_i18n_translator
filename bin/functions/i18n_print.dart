@@ -13,7 +13,7 @@ void i18PrintDebug(
   String message, {
   bool writeLine = true,
 }) {
-  if (!showDebug) {
+  if (!showDebug || message.isEmpty) {
     return;
   }
   const green = '\x1B[32m';

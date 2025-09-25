@@ -68,7 +68,7 @@ abstract class I18nLanguageHelper {
     final file = File('$generatedDir/i18n.dart');
 
     if (!await file.exists()) {
-      print("⚠️ i18n.dart not found in $generatedDir");
+      i18PrintError("⚠️ i18n.dart not found in $generatedDir");
       return;
     }
 
@@ -82,7 +82,7 @@ abstract class I18nLanguageHelper {
 
     final match = i18nClassRegex.firstMatch(content);
     if (match == null) {
-      print("⚠️ Could not find I18n class in i18n.dart");
+      i18PrintError("⚠️ Could not find I18n class in i18n.dart");
       return;
     }
 
@@ -132,7 +132,7 @@ abstract class I18nLanguageHelper {
         '✅ Dart fix applied successfully in $path',
         writeLine: true,
       );
-      i18PrintDebug(result.stdout);
+      i18PrintDebug("output: ${result.stdout}");
     } else {
       i18PrintError('❌ Dart fix failed:\n${result.stderr}');
     }
