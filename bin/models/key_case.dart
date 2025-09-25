@@ -65,50 +65,59 @@ enum I18nKeyCase {
   String convert(String input) => _converter(input);
 
   // ---- private converters ----
+  /// Converts any string to camelCase
   static String _toCamelCase(String input) {
-    // Split on _, -, spaces
-    final parts = input.split(RegExp(r'[_\s-]+'));
-
-    // If only one part, preserve internal capitals
-    if (parts.length == 1) {
-      final p = parts.first;
-      return p[0].toLowerCase() + p.substring(1);
-    }
-
-    final newValue = parts.first.toLowerCase() +
-        parts
-            .skip(1)
-            .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
-            .join();
-
-    i18PrintDebug("$input => $newValue");
-    return newValue;
+    final parts = _splitToWords(input);
+    if (parts.isEmpty) return '';
+    return parts.first.toLowerCase() +
+        parts.skip(1).map((w) => _capitalize(w)).join();
   }
 
-
+  /// Converts any string to PascalCase
   static String _toPascalCase(String input) {
-    final parts = input.split(RegExp(r'[_\s-]+'));
-    return parts
-        .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
-        .join();
+    final parts = _splitToWords(input);
+    return parts.map((w) => _capitalize(w)).join();
   }
 
+  /// Converts any string to snake_case
   static String _toSnakeCase(String input) {
-    return input
-        .replaceAllMapped(
-            RegExp(r'[A-Z]'), (m) => '_${m.group(0)!.toLowerCase()}')
-        .replaceAll(RegExp(r'[\s-]+'), '_')
-        .toLowerCase()
-        .replaceFirst(RegExp(r'^_+'), '');
+    final parts = _splitToWords(input);
+    return parts.map((w) => w.toLowerCase()).join('_');
   }
 
+  /// Converts any string to kebab-case
   static String _toKebabCase(String input) {
-    return input
-        .replaceAllMapped(
-            RegExp(r'[A-Z]'), (m) => '-${m.group(0)!.toLowerCase()}')
-        .replaceAll(RegExp(r'[\s_]+'), '-')
-        .toLowerCase()
-        .replaceFirst(RegExp(r'^-+'), '');
+    final parts = _splitToWords(input);
+    return parts.map((w) => w.toLowerCase()).join('-');
+  }
+
+  /// --- Helper methods ---
+
+  /// Splits input into words based on _ - space or camel/PascalCase boundaries
+  static List<String> _splitToWords(String input) {
+    if (input.isEmpty) return [];
+
+    // Step 1: replace non-alphanumeric separators with spaces
+    final normalized = input.replaceAll(RegExp(r'[_\-\s]+'), ' ');
+
+    // Step 2: insert spaces before uppercase letters (camel/PascalCase)
+    final splitCamel = normalized.replaceAllMapped(
+      RegExp(r'([a-z0-9])([A-Z])'),
+      (m) => '${m[1]} ${m[2]}',
+    );
+
+    // Step 3: split by space and remove empty parts
+    return splitCamel
+        .split(' ')
+        .map((w) => w.trim())
+        .where((w) => w.isNotEmpty)
+        .toList();
+  }
+
+  /// Capitalize first letter, preserve rest
+  static String _capitalize(String word) {
+    if (word.isEmpty) return '';
+    return word[0].toUpperCase() + word.substring(1).toLowerCase();
   }
 }
 
