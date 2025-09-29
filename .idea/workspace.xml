@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bbb915e-7eb5-4a44-a165-d839247d648a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/bin/app.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/functions/i18n_languages_helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/bin/functions/i18n_languages_helper.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/functions/i18n_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/bin/functions/i18n_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/example.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/example.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

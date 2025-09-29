@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.8 - 2025-09-29
+### Added
+- `--enhanceGeneratedFile` and `--no-enhanceGeneratedFile` CLI flags
+  - Enhances the generated `I18n` file by:
+    - Modifying the `locale` setter to automatically reload and update calling `onLocaleChanged` automatically
+    - Adding a static `current` instance of `I18n` so you can access translations without `BuildContext`
+  - Default is `--enhanceGeneratedFile` enabled; can be explicitly disabled with `--no-enhanceGeneratedFile`.
+- New example in `example.dart` for `--enhanceGeneratedFile`.
+
 ## 0.1.7 - 2025-09-25
 
 - Added `--autoDartFixGeneratedFile` and `--no-autoDartFixGeneratedFile` CLI flags

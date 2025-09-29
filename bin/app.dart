@@ -28,6 +28,7 @@ bool autoApplyTranslations = false;
 bool showDebug = false;
 bool autoGenerate = true;
 bool autoDartFixGeneratedFile = true;
+bool replaceLocaleSetter = true;
 bool addMissingOverridesGeneratedFile = true;
 I18nKeyCase? keyCase;
 
@@ -128,11 +129,9 @@ void runTranslator(List<String> args) async {
         writeLine: true,
       );
       i18PrintDebug(result.stdout);
-      if (addMissingOverridesGeneratedFile) {
-        await I18nLanguageHelper.postProcessI18nJson(
-          config.generatedDirectory.path,
-        );
-      }
+      await I18nLanguageHelper.postProcessI18nJson(
+        config,
+      );
       if (autoDartFixGeneratedFile) {
         await I18nLanguageHelper.fixGeneratedFiles(
           config.generatedDirectory.path,
@@ -200,6 +199,12 @@ void processArgs(List<String> args) {
       case '--no-autoDartFixGeneratedFile':
         autoDartFixGeneratedFile = false;
         break;
+      case '--enhanceGeneratedFile':
+        replaceLocaleSetter = true;
+        break;
+      case '--no-enhanceGeneratedFile':
+        replaceLocaleSetter = false;
+        break;
       case '--help':
       case '-h':
         print(
@@ -213,6 +218,8 @@ void processArgs(List<String> args) {
           "--no-addMissingOverrides       Disable adding overrides to I18n\n"
           "--show-debug                   Enable debug messages\n"
           "--no-debug                     Disable debug messages\n"
+          "--enhanceGeneratedFile           Enhance I18n.dart (replace locale setter, add I18n.current)\n"
+          "--no-enhanceGeneratedFile        Keep I18n.dart unmodified (use default generated code)\n"
           "--key-case <style>             Convert all keys to a specific case:\n"
           "                                - camel   (exampleKey)\n"
           "                                - pascal  (ExampleKey)\n"

@@ -18,7 +18,9 @@ It uses [translator](https://pub.dev/packages/translator) under the hood (Google
 - CLI flags to enable automation & debug logging.
 - **Auto-generate Dart i18n files** using [`i18n_json`](https://pub.dev/packages/i18n_json).
 - Convert all JSON keys to a specific case (`camelCase`, `PascalCase`, `snake_case`, `kebab-case`).
-
+- Adds a `locale` setter that automatically calls onLocaleChanged when Locale Changes.
+- Adds a `current` static I18n instance for direct access (no context required).
+- Ensures missing `WidgetsLocalizations` overrides are included.
 ---
 
 ## 📦 Installation
@@ -33,7 +35,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.7
+  flutter_i18n_translator: ^0.1.8
 ```
 
 Run from project root:
@@ -132,6 +134,11 @@ flutter_i18n_translator
 --key-case <style>             Convert all JSON keys to a specific case (camel, pascal, snake, kebab)
 --autoDartFixGeneratedFile     Automatically run 'dart fix --apply' on generated files
 --no-autoDartFixGeneratedFile  Disable automatic 'dart fix' after generation
+--enhanceGeneratedFile         Enhances the generated I18n Dart file by modifying the locale setter 
+                               to call onLocaleChanged interally when changing locale,
+                               and adds a static `current` I18n instance so you can access translations
+                               without passing a BuildContext.
+--no-enhanceGeneratedFile      Disable enhancing the generated I18n file.
 --help, -h                     Show this help message
 ```
 

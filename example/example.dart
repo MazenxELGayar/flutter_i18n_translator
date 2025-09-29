@@ -108,6 +108,13 @@ Future<void> main() async {
     ['--key-case', 'kebab'],
     description: 'Convert all JSON keys to kebab-case',
   );
+
+  // 1️⃣5️⃣ Enhance generated I18n file
+  await _runExample(
+    ['--enhanceGeneratedFile'],
+    description:
+        'Enhances the generated I18n file (adds locale setter & static current instance without the need of context)',
+  );
 }
 
 Future<void> _runExample(List<String> args,

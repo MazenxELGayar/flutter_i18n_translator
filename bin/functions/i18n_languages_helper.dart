@@ -64,11 +64,17 @@ abstract class I18nLanguageHelper {
     return missing;
   }
 
-  static Future<void> postProcessI18nJson(String generatedDir) async {
-    final file = File('$generatedDir/i18n.dart');
+  static Future<void> postProcessI18nJson(I18nConfig config) async {
+    if (addMissingOverridesGeneratedFile == false &&
+        replaceLocaleSetter == false) {
+      i18PrintDebug("No Post Process, Everything is false");
+      return;
+    }
+    final file = File('${config.generatedDirectory.path}/i18n.dart');
 
     if (!await file.exists()) {
-      i18PrintError("⚠️ i18n.dart not found in $generatedDir");
+      i18PrintError(
+          "⚠️ i18n.dart not found in ${config.generatedDirectory.path}");
       return;
     }
 
@@ -88,25 +94,89 @@ abstract class I18nLanguageHelper {
 
     var i18nBody = match.group(1)!;
 
-    // Required overrides
-    final requiredOverrides = <String, String>{
-      'copyButtonLabel': 'String get copyButtonLabel => "Copy";',
-      'cutButtonLabel': 'String get cutButtonLabel => "Cut";',
-      'lookUpButtonLabel': 'String get lookUpButtonLabel => "Look up";',
-      'pasteButtonLabel': 'String get pasteButtonLabel => "Paste";',
-      'searchWebButtonLabel':
-          'String get searchWebButtonLabel => "Search Web";',
-      'selectAllButtonLabel':
-          'String get selectAllButtonLabel => "Select All";',
-      'shareButtonLabel': 'String get shareButtonLabel => "Share";',
-    };
+    // --- build the locale setter + lookup function if replaceLocaleSetter is true ---
+    if (replaceLocaleSetter) {
+      final switchCases = config.locales.map((localeFile) {
+        final locale = localeFile.locale;
+        final key = locale.countryCode != null
+            ? '${locale.languageCode}_${locale.countryCode}'
+            : locale.languageCode;
 
-    // Inject only missing ones into the I18n class body
-    requiredOverrides.forEach((name, code) {
-      if (!i18nBody.contains(name)) {
-        i18nBody += '\n  @override\n  $code\n';
+        final className = [
+          '_I18n',
+          locale.languageCode,
+          if (locale.countryCode != null) locale.countryCode,
+        ].join('_').replaceAll('-', '_');
+
+        return '      case "$key":\n        return const $className();';
+      }).join('\n');
+
+      final replacementSetter = '''
+  static I18n? _current;
+  static I18n? get current => _current;
+
+  static set locale(Locale? newLocale) {
+    _shouldReload = true;
+    I18n._locale = newLocale;
+    if (_locale != null) {
+      onLocaleChanged?.call(_locale!);
+    }
+    _current = _lookupI18n(newLocale);
+  }
+
+  static I18n _lookupI18n(Locale? locale) {
+    if (locale == null) {
+      return const I18n();
+    }
+final key = locale.countryCode != null
+    ? locale.languageCode + '_' + locale.countryCode!
+    : locale.languageCode;
+
+  switch (key) {
+$switchCases
+      default:
+        if (kDebugMode) {
+          print("⚠️ Unknown locale: \$locale");
+        }
+        return const I18n(); // fallback
+    }
+  }
+''';
+
+      // Replace the old setter completely
+      final localeSetterRegex = RegExp(
+        r'static set locale\(Locale\? newLocale\)\s*\{[\s\S]*?\}',
+        multiLine: true,
+      );
+
+      if (localeSetterRegex.hasMatch(i18nBody)) {
+        i18nBody = i18nBody.replaceFirst(localeSetterRegex, replacementSetter);
+      } else {
+        // if not found, just append at end of class
+        i18nBody += '\n$replacementSetter\n';
       }
-    });
+    }
+
+    // --- Inject missing WidgetsLocalizations overrides (conditional) ---
+    if (addMissingOverridesGeneratedFile) {
+      final requiredOverrides = <String, String>{
+        'copyButtonLabel': 'String get copyButtonLabel => "Copy";',
+        'cutButtonLabel': 'String get cutButtonLabel => "Cut";',
+        'lookUpButtonLabel': 'String get lookUpButtonLabel => "Look up";',
+        'pasteButtonLabel': 'String get pasteButtonLabel => "Paste";',
+        'searchWebButtonLabel':
+            'String get searchWebButtonLabel => "Search Web";',
+        'selectAllButtonLabel':
+            'String get selectAllButtonLabel => "Select All";',
+        'shareButtonLabel': 'String get shareButtonLabel => "Share";',
+      };
+
+      requiredOverrides.forEach((name, code) {
+        if (!i18nBody.contains(name)) {
+          i18nBody += '\n  @override\n  $code\n';
+        }
+      });
+    }
 
     // Rebuild full file content
     final patched = content.replaceFirst(
@@ -116,25 +186,42 @@ abstract class I18nLanguageHelper {
 
     await file.writeAsString(patched);
     i18PrintNormal(
-      "✅ Patched I18n class with missing WidgetsLocalizations overrides",
+      "✅ Patched I18n class with locale setter & missing overrides",
       writeLine: true,
     );
   }
 
   static Future<void> fixGeneratedFiles(String path) async {
-    final result = await Process.run(
+    // 1️⃣ Apply dart fix
+    final fixResult = await Process.run(
       'dart',
       ['fix', '--apply', path],
     );
 
-    if (result.exitCode == 0) {
+    if (fixResult.exitCode == 0) {
       i18PrintNormal(
         '✅ Dart fix applied successfully in $path',
         writeLine: true,
       );
-      i18PrintDebug("output: ${result.stdout}");
+      i18PrintDebug("output: ${fixResult.stdout}");
     } else {
-      i18PrintError('❌ Dart fix failed:\n${result.stderr}');
+      i18PrintError('❌ Dart fix failed:\n${fixResult.stderr}');
+    }
+
+    // 2️⃣ Format with dart format
+    final formatResult = await Process.run(
+      'dart',
+      ['format', path],
+    );
+
+    if (formatResult.exitCode == 0) {
+      i18PrintNormal(
+        '✅ Dart format applied successfully in $path',
+        writeLine: true,
+      );
+      i18PrintDebug("output: ${formatResult.stdout}");
+    } else {
+      i18PrintError('❌ Dart format failed:\n${formatResult.stderr}');
     }
   }
 }
