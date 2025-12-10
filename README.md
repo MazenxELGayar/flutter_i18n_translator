@@ -35,7 +35,7 @@ Or use locally in a project:
 
 ```yaml
 dev_dependencies:
-  flutter_i18n_translator: ^0.1.8
+  flutter_i18n_translator: ^0.1.9
 ```
 
 Run from project root:
@@ -222,7 +222,16 @@ Run locally:
 ```bash
 dart run bin/flutter_i18n_translator.dart --help
 ```
+---
 
+# ❤️ Donate
+
+If you would like to support this package:
+
+**PayPal:**
+[https://paypal.me/mazenelgayar](https://paypal.me/mazenelgayar)
+
+Thank you for your support!
 ---
 
 ## 📄 License

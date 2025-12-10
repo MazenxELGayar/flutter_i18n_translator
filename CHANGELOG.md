@@ -1,6 +1,12 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project are documented in this file.
+
+## 0.1.9 — 2025-12-10
+- Added a donation link.
+
+**PayPal:**  
+[https://paypal.me/mazenelgayar](https://paypal.me/mazenelgayar)
 
 ## 0.1.8 - 2025-09-29
 ### Added
