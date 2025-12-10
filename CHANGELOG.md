@@ -8,6 +8,10 @@ All notable changes to this project are documented in this file.
 **PayPal:**  
 [https://paypal.me/mazenelgayar](https://paypal.me/mazenelgayar)
 
+**InstaPay:**  
+https://ipn.eg/S/mazenel-gayarcib/instapay/0ecfXw  
+**Tag:** `mazenel-gayarcib@instapay`
+
 ## 0.1.8 - 2025-09-29
 ### Added
 - `--enhanceGeneratedFile` and `--no-enhanceGeneratedFile` CLI flags

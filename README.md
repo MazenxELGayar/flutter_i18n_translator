@@ -228,8 +228,12 @@ dart run bin/flutter_i18n_translator.dart --help
 
 If you would like to support this package:
 
-**PayPal:**
+**PayPal:**  
 [https://paypal.me/mazenelgayar](https://paypal.me/mazenelgayar)
+
+**InstaPay:**  
+https://ipn.eg/S/mazenel-gayarcib/instapay/0ecfXw  
+**Tag:** `mazenel-gayarcib@instapay`
 
 Thank you for your support!
 ---
