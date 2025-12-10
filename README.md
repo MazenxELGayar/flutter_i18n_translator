@@ -23,6 +23,25 @@ It uses [translator](https://pub.dev/packages/translator) under the hood (Google
 - Ensures missing `WidgetsLocalizations` overrides are included.
 ---
 
+# ❤️ Support the Project
+
+If this package saved you development time, please consider supporting the work behind it:
+
+### **PayPal Donation**
+
+👉 [https://paypal.me/mazenelgayar](https://paypal.me/mazenelgayar)
+
+### **InstaPay**
+
+👉 [https://ipn.eg/S/mazenel-gayarcib/instapay/0ecfXw](https://ipn.eg/S/mazenel-gayarcib/instapay/0ecfXw)
+**Tag:** `mazenel-gayarcib@instapay`
+
+Your support directly motivates further updates, improvements, and new features.
+Thank you! ❤️🙏
+
+
+---
+
 ## 📦 Installation
 
 Activate globally from [pub.dev](https://pub.dev/packages/flutter_i18n_translator):
@@ -222,20 +241,6 @@ Run locally:
 ```bash
 dart run bin/flutter_i18n_translator.dart --help
 ```
----
-
-# ❤️ Donate
-
-If you would like to support this package:
-
-**PayPal:**  
-[https://paypal.me/mazenelgayar](https://paypal.me/mazenelgayar)
-
-**InstaPay:**  
-https://ipn.eg/S/mazenel-gayarcib/instapay/0ecfXw  
-**Tag:** `mazenel-gayarcib@instapay`
-
-Thank you for your support!
 ---
 
 ## 📄 License
